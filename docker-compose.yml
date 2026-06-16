@@ -1,0 +1,9 @@
+services:
+  indiadex:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_TRANSAK_API_KEY=fb09183d-aa60-4d4b-826e-ceebfb294ed8
+      - NEXT_PUBLIC_TRANSAK_ENV=STAGING
+    restart: unless-stopped
