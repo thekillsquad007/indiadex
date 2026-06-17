@@ -1,17 +1,7 @@
-<svg width="32" height="32" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="100" cy="100" r="95" stroke="#6366f1" stroke-width="6" fill="#0a0a0f"/>
-  
-  <circle cx="100" cy="22" r="22" fill="#6366f1"/>
-  <text x="100" y="30" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">$</text>
-  
-  <circle cx="178" cy="100" r="22" fill="#6366f1"/>
-  <text x="178" y="108" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">£</text>
-  
-  <circle cx="100" cy="178" r="22" fill="#6366f1"/>
-  <text x="100" y="186" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">¥</text>
-  
-  <circle cx="22" cy="100" r="22" fill="#6366f1"/>
-  <text x="22" y="108" text-anchor="middle" fill="white" font-size="28" font-weight="bold" font-family="Arial">€</text>
-  
-  <text x="100" y="115" text-anchor="middle" fill="white" font-size="56" font-weight="bold" font-family="Arial">ID</text>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="6" fill="#0a0a0f"/>
+  <polygon points="14,6 22,11 22,21 14,26 6,21 6,11" fill="rgba(99,102,241,0.25)" stroke="#818cf8" stroke-width="1.2"/>
+  <polygon points="26,12 26,20 19,24 19,16" fill="rgba(167,139,250,0.2)" stroke="#a78bfa" stroke-width="1.2"/>
+  <path d="M13 17 L19 17 M17 15 L19 17 L17 19" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="16" y="20" text-anchor="middle" fill="white" font-size="9" font-weight="800" font-family="system-ui">ID</text>
 </svg>
