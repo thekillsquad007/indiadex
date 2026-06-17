@@ -8,8 +8,8 @@ type Props = {
 };
 
 const widgetConfig: WidgetConfig = {
-  integrator: "Indiadex",
-  apiKey: process.env.NEXT_PUBLIC_LI_FI_API_KEY || "",
+  integrator: "indiadexswap",
+  apiKey: process.env.NEXT_PUBLIC_LI_FI_API_KEY || "5789b3b8-04ed-4f06-bd0a-1a86bf63ddfa.816b16b0-8e98-4d29-90a3-acfcfc6a7d5a",
   providers: [EthereumProvider()],
   theme: {
     colorSchemes: {
@@ -35,7 +35,7 @@ const widgetConfig: WidgetConfig = {
   },
   appearance: "dark",
   feeConfig: {
-    name: "Indiadex",
+    name: "indiadexswap",
     fee: 0.0075,
     showFeePercentage: true,
     showFeeTooltip: true,
