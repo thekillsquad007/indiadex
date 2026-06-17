@@ -9,18 +9,18 @@ export default function CTA() {
 
           <div className="relative max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-4">
-              Ready to buy or sell crypto?
+              Ready to swap across chains?
             </h2>
             <p className="text-lg text-white/80 mb-8 leading-relaxed">
-              Get started in under two minutes. No downloads, no complex
-              registration. Just connect, pay, and receive.
+              Connect your wallet and swap any token across 20+ chains. No
+              registration, no KYC. Just connect, swap, and go.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="#swap"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-indigo-600 hover:bg-white/90 transition-colors"
               >
-                Start now
+                Start swapping
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" />
                 </svg>

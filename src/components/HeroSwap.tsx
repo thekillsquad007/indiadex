@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import TransakModal from "./TransakModal";
+import dynamic from "next/dynamic";
 import OnrampModal from "./OnrampModal";
-import LiFiSwapper from "./LiFiSwapper";
+
+const LiFiSwapper = dynamic(() => import("./LiFiSwapper"), { ssr: false });
 
 type Mode = "BUY" | "SELL" | "SWAP";
 
@@ -121,7 +122,7 @@ export default function HeroSwap({
   defaultFiat?: string;
   defaultNetwork?: string;
 }) {
-  const modeDefault = defaultMode || "BUY";
+  const modeDefault = defaultMode || "SWAP";
   const coinDefault = defaultCoin || "USDT";
   const fiatDefault = defaultFiat || "INR";
   const netDefault = defaultNetwork || "ethereum";
@@ -132,10 +133,9 @@ export default function HeroSwap({
   const [selectedFiat, setSelectedFiat] = useState(fiatDefault);
   const [fiatAmount, setFiatAmount] = useState("1000");
   const [walletAddress, setWalletAddress] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
-  const [widgetUrl, setWidgetUrl] = useState<string | null>(null);
+
   const [orderSuccess, setOrderSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [onrampOpen, setOnrampOpen] = useState(false);
@@ -158,43 +158,11 @@ export default function HeroSwap({
   const [quote, setQuote] = useState<{ cryptoAmount: number; totalFee: number; conversionPrice: number } | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
   const [isStaging, setIsStaging] = useState(false);
-  const [provider, setProvider] = useState<"transak" | "onramp">("transak");
   const initialised = useRef(false);
 
   useEffect(() => {
     if (initialised.current) return;
     initialised.current = true;
-
-    const storedWallet = readStorage<string>("", "");
-    if (storedWallet) setWalletAddress(storedWallet);
-
-    fetch("/api/transak/fiat-currencies")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.currencies?.length) {
-          const mapped: Fiat[] = data.currencies
-            .filter((c: { isAllowed: boolean }) => c.isAllowed)
-            .map((c: { code: string; name: string; countries?: string[]; paymentMethods?: { id: string; label: string }[] }) => {
-              const countryCode = c.countries?.[0] || c.code.slice(0, 2);
-              return {
-                code: c.code,
-                symbol: getSymbolForFiat(c.code),
-                country: COUNTRY_NAMES[countryCode] || c.name || c.code,
-                flag: COUNTRY_FLAGS[countryCode] || countryCode,
-                paymentMethods: c.paymentMethods || [],
-              };
-            });
-          setFiatsList(mapped);
-        }
-      })
-      .catch(() => {});
-
-    fetch("/api/transak/crypto-currencies")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.coins?.length) setCoinsList(data.coins);
-      })
-      .catch(() => {});
 
     if (hasDefaultFiat.current) return;
 
@@ -213,13 +181,6 @@ export default function HeroSwap({
         if (fiat && fiatsList.find((f: Fiat) => f.code === fiat)) {
           setSelectedFiat(fiat);
         }
-      })
-      .catch(() => {});
-
-    fetch("/api/transak/crypto-currencies")
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.coins?.length) setCoinsList(data.coins);
       })
       .catch(() => {});
 
@@ -245,35 +206,9 @@ export default function HeroSwap({
       setQuote(null);
       return;
     }
-    const controller = new AbortController();
-    setQuoteLoading(true);
-    const params = new URLSearchParams({
-      fiatCurrency: selectedFiat,
-      cryptoCurrency: selectedCoin,
-      network: selectedNetwork,
-      isBuyOrSell: mode,
-      fiatAmount: String(Number(fiatAmount)),
-    });
-    fetch(`/api/transak/quote?${params}`, { signal: controller.signal })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (data?.quote) {
-          setQuote({ cryptoAmount: data.quote.cryptoAmount, totalFee: data.quote.totalFee, conversionPrice: data.quote.conversionPrice });
-          if (data.env) setIsStaging(data.env !== "PRODUCTION");
-        } else { setQuote(null); }
-      })
-      .catch(() => {})
-      .finally(() => setQuoteLoading(false));
-    return () => controller.abort();
   }, [fiatAmount, selectedCoin, selectedNetwork, selectedFiat, mode]);
 
-  const handleModalClose = useCallback(() => setWidgetUrl(null), []);
-  const handleOrderSuccess = useCallback((data: unknown) => {
-    console.log("[Indiadex] Order successful:", data);
-    setOrderSuccess(true);
-    setWidgetUrl(null);
-    setTimeout(() => setOrderSuccess(false), 5000);
-  }, []);
+
 
   const fiat = useMemo(
     () => fiatsList.find((f) => f.code === selectedFiat) || fiatsList[0],
@@ -300,7 +235,7 @@ export default function HeroSwap({
     writeStorage(STORAGE_KEYS.recentCoins, next);
   };
 
-  const handleSwap = async () => {
+  const handleSwap = () => {
     if (!walletAddress.trim()) {
       setError("Please enter your wallet address");
       return;
@@ -310,57 +245,9 @@ export default function HeroSwap({
       return;
     }
 
-    if (provider === "onramp") {
-      setOnrampOpen(true);
-      return;
-    }
-
     writeStorage(STORAGE_KEYS.wallet, walletAddress.trim());
-
-    setIsLoading(true);
     setError(null);
-
-    try {
-      const paymentMethod = fiat?.paymentMethods?.[0]?.id || undefined;
-      const body: Record<string, unknown> = {
-        productsAvailed: mode,
-        cryptoCurrencyCode: selectedCoin,
-        network: selectedNetwork,
-        fiatCurrency: selectedFiat,
-        fiatAmount: Number(fiatAmount),
-        walletAddress: walletAddress.trim(),
-        paymentMethod,
-        email: email.trim() || undefined,
-      };
-
-      if (kycFirstName.trim() && kycLastName.trim()) {
-        body.userData = {
-          firstName: kycFirstName.trim(),
-          lastName: kycLastName.trim(),
-          dob: kycDob.trim() || undefined,
-          address: {
-            addressLine1: kycAddress.trim() || undefined,
-            city: kycCity.trim() || undefined,
-            zipCode: kycZipCode.trim() || undefined,
-            country: detectedCountry || undefined,
-          },
-        };
-      }
-
-      const res = await fetch("/api/transak", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      const data = await res.json();
-      if (data.widgetUrl) {
-        setWidgetUrl(data.widgetUrl);
-      } else {
-        setError(`${data.error || "Failed"} — check console for details`);
-      }
-    } catch { setError("Something went wrong. Please try again."); }
-    finally { setIsLoading(false); }
+    setOnrampOpen(true);
   };
 
   return (
@@ -383,18 +270,18 @@ export default function HeroSwap({
                 <span className="text-xs text-muted">Live rates · 40+ countries supported</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05] mb-6">
-                Buy &amp; sell crypto with
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05] mb-6">
+                Swap any token
                 <br />
-                <span className="gradient-text">local currency</span>
-              </h1>
+                <span className="gradient-text">across any chain</span>
+              </h2>
 
               <p className="text-base sm:text-lg text-muted leading-relaxed mb-8 max-w-lg">
-                Indiadex lets users in 40+ countries buy and sell Bitcoin, Ethereum, USDT and 100+ cryptocurrencies with local fiat. Powered by regulated infrastructure.
+                Indiadex lets you swap between 100+ cryptocurrencies across 20+ chains. Connect your wallet and get the best rates from all major DEXs and bridges via LI.FI.
               </p>
 
               <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted mb-8">
-                {["Buy & sell", "40+ countries", "100+ tokens", "Non-custodial"].map((label) => (
+                {["Cross-chain swap", "40+ countries", "100+ tokens", "Non-custodial"].map((label) => (
                   <div key={label} className="flex items-center gap-2">
                     <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -431,23 +318,29 @@ export default function HeroSwap({
                   <div className="inline-flex w-full rounded-lg bg-white/5 border border-white/10 p-1">
                     <button
                       onClick={() => setMode("BUY")}
-                      className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all ${
+                      className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all relative ${
                         mode === "BUY"
                           ? "bg-indigo-500/20 text-indigo-200 border border-indigo-500/40"
                           : "text-muted hover:text-foreground"
                       }`}
                     >
                       Buy
+                      <span className="absolute -top-2 -right-2 text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                        Soon
+                      </span>
                     </button>
                     <button
                       onClick={() => setMode("SELL")}
-                      className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all ${
+                      className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all relative ${
                         mode === "SELL"
                           ? "bg-violet-500/20 text-violet-200 border border-violet-500/40"
                           : "text-muted hover:text-foreground"
                       }`}
                     >
                       Sell
+                      <span className="absolute -top-2 -right-2 text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                        Soon
+                      </span>
                     </button>
                     <button
                       onClick={() => setMode("SWAP")}
@@ -462,27 +355,8 @@ export default function HeroSwap({
                   </div>
 
                   {mode !== "SWAP" && (
-                    <div className="flex gap-1.5">
-                      <button
-                        onClick={() => setProvider("transak")}
-                        className={`flex-1 rounded-md py-1.5 text-[11px] font-medium transition-all uppercase tracking-wider ${
-                          provider === "transak"
-                            ? "bg-white/10 text-foreground"
-                            : "text-muted/50 hover:text-muted"
-                        }`}
-                      >
-                        Transak
-                      </button>
-                      <button
-                        onClick={() => setProvider("onramp")}
-                        className={`flex-1 rounded-md py-1.5 text-[11px] font-medium transition-all uppercase tracking-wider ${
-                          provider === "onramp"
-                            ? "bg-white/10 text-foreground"
-                            : "text-muted/50 hover:text-muted"
-                        }`}
-                      >
-                        Onramp
-                      </button>
+                    <div className="flex items-center justify-center gap-1.5 py-1">
+                      <span className="text-[11px] font-medium uppercase tracking-wider text-muted/70">Powered by Onramp.money</span>
                     </div>
                   )}
 
@@ -711,7 +585,7 @@ export default function HeroSwap({
                           <input type="text" value={kycZipCode} onChange={(e) => setKycZipCode(e.target.value)} placeholder="Postal code" className="w-full rounded-lg bg-white/5 border border-white/10 py-2.5 px-3 text-sm text-foreground placeholder-white/20 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.07] transition-colors" />
                         </div>
                         <p className="text-xs text-muted">
-                          Providing these details skips the Lite KYC screen inside Transak. Your data is sent securely and handled by Transak.
+                          Providing these details can speed up your KYC verification.
                         </p>
                       </div>
                     )}
@@ -723,38 +597,25 @@ export default function HeroSwap({
 
                   <button
                     onClick={handleSwap}
-                    disabled={isLoading}
                     className={`w-full inline-flex items-center justify-center gap-2 rounded-lg py-3.5 text-sm font-semibold text-white shadow-lg transition-all ${
                       mode === "BUY"
                         ? "gradient-accent shadow-indigo-500/25 hover:shadow-indigo-500/40"
                         : "gradient-success shadow-emerald-500/25 hover:shadow-emerald-500/40"
-                    } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    }`}
                   >
-                    {isLoading ? (
-                      <>
-                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Initializing...
-                      </>
-                    ) : (
-                      <>
-                        {mode === "BUY"
-                          ? `Buy ${selectedCoin} with ${fiat?.symbol || "₹"}${Number(fiatAmount || 0).toLocaleString("en-IN")}`
-                          : `Sell ${selectedCoin} for ${fiat?.symbol || "₹"}${Number(fiatAmount || 0).toLocaleString("en-IN")}`}
-                        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" />
-                        </svg>
-                      </>
-                    )}
+                    {mode === "BUY"
+                      ? `Buy ${selectedCoin} with ${fiat?.symbol || "₹"}${Number(fiatAmount || 0).toLocaleString("en-IN")}`
+                      : `Sell ${selectedCoin} for ${fiat?.symbol || "₹"}${Number(fiatAmount || 0).toLocaleString("en-IN")}`}
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
                   </button>
 
                   <div className="flex items-center justify-center gap-2 pt-2">
                     <svg className="h-3.5 w-3.5 text-emerald-500" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs text-muted">Secured by Transak · KYC handled securely · 40+ countries</span>
+                    <span className="text-xs text-muted">KYC handled securely · 40+ countries</span>
                   </div>
                     </div>
                 )}
@@ -769,10 +630,6 @@ export default function HeroSwap({
         <div className="mx-auto max-w-lg mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-sm text-emerald-300 text-center">
           Order placed successfully! Check your wallet for the transaction.
         </div>
-      )}
-
-      {widgetUrl && (
-        <TransakModal widgetUrl={widgetUrl} onClose={handleModalClose} onOrderSuccess={handleOrderSuccess} />
       )}
 
       {onrampOpen && (

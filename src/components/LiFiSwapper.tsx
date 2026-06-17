@@ -2,17 +2,12 @@
 
 import { LiFiWidget, type WidgetConfig } from "@lifi/widget";
 import { EthereumProvider } from "@lifi/widget-provider-ethereum";
-import { WalletManagementProviders } from "@lifi/wallet-management";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 type Props = {
   onClose: () => void;
 };
 
-const queryClient = new QueryClient();
-
-const config: WidgetConfig = {
+const widgetConfig: WidgetConfig = {
   integrator: "Indiadex",
   apiKey: process.env.NEXT_PUBLIC_LI_FI_API_KEY || "",
   providers: [EthereumProvider()],
@@ -36,8 +31,6 @@ const config: WidgetConfig = {
     container: {
       border: "none",
       borderRadius: "16px",
-      height: "100%",
-      minHeight: "600px",
     },
   },
   appearance: "dark",
@@ -51,18 +44,10 @@ const config: WidgetConfig = {
 };
 
 export default function LiFiSwapper({ onClose }: Props) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-[480px] mx-4 max-h-[90vh] overflow-auto rounded-2xl border border-white/10 shadow-2xl">
+      <div className="relative z-10 w-full max-w-[720px] mx-4 max-h-[95vh] min-h-[700px] overflow-auto rounded-2xl border border-white/10 shadow-2xl">
         <div className="flex items-center justify-between p-4 border-b border-white/5">
           <h3 className="text-sm font-semibold text-foreground">Swap across chains</h3>
           <button
@@ -74,11 +59,7 @@ export default function LiFiSwapper({ onClose }: Props) {
             </svg>
           </button>
         </div>
-        <QueryClientProvider client={queryClient}>
-          <WalletManagementProviders>
-            <LiFiWidget {...config} />
-          </WalletManagementProviders>
-        </QueryClientProvider>
+        <LiFiWidget {...widgetConfig} />
       </div>
     </div>
   );

@@ -5,15 +5,15 @@ import { useState } from "react";
 const faqs = [
   {
     question: "Is Indiadex regulated?",
-    answer: "Indiadex is a frontend interface that connects you to Transak — a licensed crypto on-ramp and off-ramp provider operating in 160+ countries. Transak handles all KYC/AML compliance and regulatory requirements. We are not a custodian of your funds.",
+    answer: "Indiadex connects you to regulated on-ramp and off-ramp providers operating in 160+ countries. Our partners handle all KYC/AML compliance and regulatory requirements. We are not a custodian of your funds.",
   },
   {
     question: "What are the fees?",
-    answer: "Indiadex charges zero additional platform fees. Transak's fees vary by payment method and region (typically 1-3% for UPI/bank transfers, 3-5% for cards). The exact rate is shown before you confirm any transaction.",
+    answer: "Indiadex charges zero additional platform fees. Our partner's fees vary by payment method and region (typically 1-3% for UPI/bank transfers, 3-5% for cards). The exact rate is shown before you confirm any transaction.",
   },
   {
     question: "Do I need to complete KYC?",
-    answer: "For smaller amounts, basic KYC (phone verification) may be sufficient. For larger amounts or sell transactions, full KYC is required — all handled securely within the Transak widget. KYC requirements vary by country and transaction amount.",
+    answer: "For smaller amounts, basic KYC (phone verification) may be sufficient. For larger amounts or sell transactions, full KYC is required — all handled securely within the widget. KYC requirements vary by country and transaction amount.",
   },
   {
     question: "Which payment methods are supported?",
@@ -21,11 +21,11 @@ const faqs = [
   },
   {
     question: "What fees will I pay?",
-    answer: "Total fees include Transak's baseline fee (1-3% for bank transfers, 3-5% for cards) plus our small partner markup (typically 0.5-2% for buy, 1-1.5% for sell). Network/gas fees apply for blockchain transfers. The exact breakdown is shown before you confirm any transaction — no hidden charges.",
+    answer: "Total fees include our partner's baseline fee (1-3% for bank transfers, 3-5% for cards) plus our small partner markup (typically 0.5-2% for buy, 1-1.5% for sell). Network/gas fees apply for blockchain transfers. The exact breakdown is shown before you confirm any transaction — no hidden charges.",
   },
   {
     question: "How long does it take?",
-    answer: "Buy: Most transactions complete within 2-10 minutes after payment confirmation. Sell: After you send crypto to Transak, fiat is typically deposited to your bank account within 1-2 business days.",
+    answer: "Buy: Most transactions complete within 2-10 minutes after payment confirmation. Sell: After you send crypto, fiat is typically deposited to your bank account within 1-2 business days.",
   },
   {
     question: "Which cryptocurrencies are supported?",
@@ -33,11 +33,11 @@ const faqs = [
   },
   {
     question: "Can I sell crypto too?",
-    answer: "Yes. Toggle to 'Sell' on the swap widget, choose your crypto and network, enter the amount, and provide the wallet you'll send crypto from. After Transak verifies the transaction, fiat is deposited to your verified bank account.",
+    answer: "Yes. Toggle to 'Sell' on the swap widget, choose your crypto and network, enter the amount, and provide the wallet you'll send crypto from. After the transaction is verified, fiat is deposited to your verified bank account.",
   },
   {
     question: "Is my wallet address safe?",
-    answer: "Yes. Indiadex is fully non-custodial — we never store or have access to your funds. For buy, crypto is sent directly to the wallet address you provide. For sell, you send crypto from your wallet to Transak's address.",
+    answer: "Yes. Indiadex is fully non-custodial — we never store or have access to your funds. For buy, crypto is sent directly to the wallet address you provide. For sell, you send crypto from your wallet to our partner's address.",
   },
   {
     question: "Which countries are supported?",

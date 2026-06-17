@@ -5,33 +5,36 @@ export default function JsonLd() {
     name: "Indiadex",
     url: "https://indiadexswap.xyz",
     description:
-      "Buy and sell Bitcoin, Ethereum, USDT and 100+ cryptocurrencies in 40+ countries using your local payment methods. Zero hidden fees.",
+      "Non-custodial cross-chain swap platform. Swap 100+ cryptocurrencies across 20+ chains via LI.FI. Built by Aravindkishore S.",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      description: "No platform fees — only Transak's standard fees apply",
+      description: "0.75% flat swap fee — no hidden charges",
     },
     featureList: [
-      "Buy crypto with UPI, cards, bank transfers, Apple Pay, Google Pay",
-      "Sell crypto for fiat in 40+ countries",
+      "Cross-chain swap across 20+ chains via LI.FI",
       "100+ cryptocurrencies across multiple networks",
-      "Non-custodial — crypto sent directly to your wallet",
-      "Regulated infrastructure powered by Transak",
+      "Non-custodial — you control your keys",
+      "Best rate routing across all DEXs and bridges",
+      "Buy & sell crypto coming soon with local payment methods",
     ],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      ratingCount: "100",
+    author: {
+      "@type": "Person",
+      name: "Aravindkishore S",
+      url: "https://linkedin.com/in/aravindkishores",
     },
     provider: {
       "@type": "Organization",
       name: "Indiadex",
       url: "https://indiadexswap.xyz",
       logo: "https://indiadexswap.xyz/logo.png",
-      sameAs: [],
+      sameAs: [
+        "https://github.com/thekillsquad007/indiadex",
+        "https://linkedin.com/in/aravindkishores",
+      ],
     },
   };
 
@@ -42,8 +45,16 @@ export default function JsonLd() {
     url: "https://indiadexswap.xyz",
     logo: "https://indiadexswap.xyz/logo.png",
     description:
-      "Indiadex is a non-custodial cryptocurrency on-ramp and off-ramp platform. Buy and sell crypto in 40+ countries.",
-    sameAs: [],
+      "Non-custodial cross-chain swap platform built by Aravindkishore S. Swap 100+ tokens across 20+ chains.",
+    sameAs: [
+      "https://github.com/thekillsquad007/indiadex",
+      "https://linkedin.com/in/aravindkishores",
+    ],
+    founder: {
+      "@type": "Person",
+      name: "Aravindkishore S",
+      url: "https://linkedin.com/in/aravindkishores",
+    },
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
@@ -57,34 +68,34 @@ export default function JsonLd() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Is Indiadex regulated?",
+        name: "What is Indiadex?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Indiadex is a frontend interface that connects you to Transak — a licensed crypto on-ramp and off-ramp provider operating in 160+ countries. Transak handles all KYC/AML compliance and regulatory requirements.",
+          text: "Indiadex is a non-custodial cross-chain swap platform built by Aravindkishore S. You can swap 100+ cryptocurrencies across 20+ chains including Ethereum, Solana, Polygon, Arbitrum, and more via LI.FI integration. Buy and sell features are coming soon.",
         },
       },
       {
         "@type": "Question",
-        name: "What are the fees?",
+        name: "How does the cross-chain swap work?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Indiadex charges zero additional platform fees. Transak's fees vary by payment method and region (typically 1-3% for bank transfers, 3-5% for cards). The exact rate is shown before you confirm any transaction.",
+          text: "Connect your wallet, select the source and destination tokens and chains, and Indiadex routes your swap through LI.FI which aggregates all major DEXs and bridges to find the best rate. The swap fee is a flat 0.75%.",
         },
       },
       {
         "@type": "Question",
-        name: "Which payment methods are supported?",
+        name: "What are the swap fees?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Buy: UPI (Google Pay, PhonePe, Paytm), IMPS, NEFT, debit/credit cards, Apple Pay, Google Pay, SEPA, PIX, PayID, and local bank transfers. Sell: Direct bank transfer to your verified account.",
+          text: "Indiadex charges a flat 0.75% fee on all swaps. This covers the LI.FI integration and routing. Network gas fees apply separately and vary by chain.",
         },
       },
       {
         "@type": "Question",
-        name: "Which cryptocurrencies are supported?",
+        name: "Which chains are supported for swaps?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Over 100 cryptocurrencies including Bitcoin, Ethereum, Tether, USD Coin, Solana, BNB, Polygon, XRP, and many more across Ethereum, Polygon, Arbitrum, Optimism, Base, Solana, BNB Smart Chain, Tron, and Bitcoin networks.",
+          text: "20+ chains including Ethereum, Solana, Polygon, Arbitrum, Optimism, Base, BNB Smart Chain, Avalanche, and more via LI.FI integration.",
         },
       },
       {
@@ -92,23 +103,23 @@ export default function JsonLd() {
         name: "Is Indiadex non-custodial?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Indiadex is fully non-custodial — we never store or have access to your funds. For buy, crypto is sent directly to the wallet address you provide. For sell, you send crypto from your wallet to Transak's address.",
+          text: "Yes. Indiadex is fully non-custodial — we never have access to your private keys or funds. Swaps happen directly from your wallet. Buy and sell transactions will send crypto directly to your wallet address.",
         },
       },
       {
         "@type": "Question",
-        name: "Which countries are supported?",
+        name: "Can I buy or sell crypto with fiat?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "We support 40+ countries including India, USA, UK, EU, Canada, Australia, Singapore, UAE, Japan, Brazil, and many more. Available payment methods depend on your country.",
+          text: "Buy and sell features are coming soon. For now, the platform supports cross-chain swaps. When launched, you'll be able to buy crypto with UPI, debit/credit cards, bank transfers, Apple Pay, and Google Pay in 40+ countries.",
         },
       },
       {
         "@type": "Question",
-        name: "How long does a crypto transaction take?",
+        name: "Who built Indiadex?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Buy transactions complete within 2-10 minutes after payment confirmation. Sell transactions take 1-2 business days for fiat to reach your bank account.",
+          text: "Indiadex was built by Aravindkishore S, an engineering graduate who believes crypto should be accessible to everyone. It's a solo project built with care — no VCs, no board meetings.",
         },
       },
     ],

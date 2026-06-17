@@ -9,12 +9,17 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Indiadex — Buy & Sell Crypto with Local Currency | 40+ Countries",
+    default: "Indiadex — Cross-Chain Swap Platform | Swap Any Token Across Any Chain",
     template: "%s | Indiadex",
   },
   description:
-    "Buy and sell Bitcoin, Ethereum, USDT and 100+ cryptocurrencies in 40+ countries using UPI, cards, bank transfers, Apple Pay, Google Pay. Zero hidden fees. Non-custodial. Powered by Transak.",
+    "Swap 100+ cryptocurrencies across 20+ chains. Cross-chain swap via LI.FI with best rate routing. Non-custodial, 0.75% flat fee. Built for the world by Aravindkishore S.",
   keywords: [
+    "cross chain swap",
+    "crypto swap",
+    "cross chain bridge",
+    "swap crypto",
+    "LI.FI swap",
     "buy crypto",
     "sell crypto",
     "buy bitcoin",
@@ -38,8 +43,8 @@ export const metadata: Metadata = {
     "Polygon",
     "XRP",
     "non-custodial",
-    "crypto exchange",
-    "crypto swap",
+    "token swap",
+    "decentralized exchange",
     "cryptocurrency platform",
   ],
   authors: [{ name: "Indiadex" }],
@@ -54,23 +59,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://indiadexswap.xyz",
     siteName: "Indiadex",
-    title: "Indiadex — Buy & Sell Crypto with Local Currency",
+    title: "Indiadex — Cross-Chain Swap Platform",
     description:
-      "Buy and sell Bitcoin, Ethereum, USDT and 100+ cryptocurrencies in 40+ countries. UPI, cards, bank transfers, Apple Pay supported. Zero hidden fees.",
+      "Swap 100+ cryptocurrencies across 20+ chains via LI.FI. Non-custodial, 0.75% flat fee. Built for everyone.",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Indiadex — Buy & Sell Crypto with Local Currency",
+        alt: "Indiadex — Cross-Chain Swap Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Indiadex — Buy & Sell Crypto with Local Currency",
+    title: "Indiadex — Cross-Chain Swap Platform",
     description:
-      "Buy and sell Bitcoin, Ethereum, USDT and 100+ cryptocurrencies in 40+ countries. UPI, cards, bank transfers supported.",
+      "Swap 100+ cryptocurrencies across 20+ chains. Non-custodial cross-chain swap platform.",
     images: ["/og.png"],
     creator: "@indiadex",
   },
@@ -86,7 +91,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "",
+    google: "Nv4AlJZ6l8QwMFmEBjh5Ue2UJL8EiZ9V1rI5s0P3cQo",
   },
   icons: {
     icon: "/favicon.svg",

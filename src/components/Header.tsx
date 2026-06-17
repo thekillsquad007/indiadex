@@ -19,7 +19,7 @@ export default function Header() {
                 Indiadex
               </span>
               <span className="text-[10px] text-muted -mt-0.5 hidden sm:block">
-                Buy &amp; sell crypto globally
+                Cross-chain swap
               </span>
             </div>
           </a>
@@ -44,6 +44,12 @@ export default function Header() {
               How it works
             </a>
             <a
+              href="/about"
+              className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
+            >
+              About
+            </a>
+            <a
               href="#faq"
               className="px-3 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/5"
             >
@@ -56,7 +62,7 @@ export default function Header() {
               href="#swap"
               className="group inline-flex items-center gap-2 rounded-full gradient-accent px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all"
             >
-              Buy Crypto
+              Swap Now
               <svg
                 className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform"
                 viewBox="0 0 24 24"
@@ -94,6 +100,9 @@ export default function Header() {
             <a href="#how-it-works" className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5">
               How it works
             </a>
+            <a href="/about" className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5">
+              About
+            </a>
             <a href="#faq" className="block px-3 py-2 text-sm text-muted hover:text-foreground rounded-lg hover:bg-white/5">
               FAQ
             </a>
@@ -101,7 +110,7 @@ export default function Header() {
               href="#swap"
               className="mt-2 block text-center rounded-full gradient-accent px-5 py-2.5 text-sm font-semibold text-white"
             >
-              Buy Crypto
+              Swap Now
             </a>
           </div>
         )}

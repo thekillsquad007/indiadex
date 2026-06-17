@@ -1,7 +1,7 @@
 const stats = [
   { value: "100+", label: "Cryptocurrencies" },
-  { value: "40+", label: "Countries supported" },
-  { value: "< 2 min", label: "Average delivery" },
+  { value: "20+", label: "Chains supported" },
+  { value: "0.75%", label: "Flat swap fee" },
   { value: "0%", label: "Custody risk" },
 ];
 

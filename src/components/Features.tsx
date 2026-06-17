@@ -5,8 +5,8 @@ const features = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    title: "Instant settlement",
-    description: "Crypto arrives in your wallet within minutes. No waiting for bank settlements or manual reviews.",
+    title: "Cross-chain swap",
+    description: "Swap tokens across 20+ chains including Ethereum, Solana, Polygon, Arbitrum, and more. One interface, all chains.",
   },
   {
     icon: (
@@ -15,7 +15,7 @@ const features = [
       </svg>
     ),
     title: "Non-custodial",
-    description: "We never hold your funds. Crypto is sent directly to your wallet address — you stay in control.",
+    description: "We never have access to your keys or funds. Swaps happen directly from your wallet. You stay in control always.",
   },
   {
     icon: (
@@ -23,8 +23,8 @@ const features = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
       </svg>
     ),
-    title: "Local payment methods",
-    description: "Pay with UPI, IMPS, NEFT, debit/credit cards, Apple Pay, Google Pay, SEPA, and local bank transfers.",
+    title: "Best rate routing",
+    description: "LI.FI aggregates all major DEXs and bridges to find the best route for your swap. Lowest slippage, best price.",
   },
   {
     icon: (
@@ -32,8 +32,8 @@ const features = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: "Regulated partner",
-    description: "Powered by Transak — a licensed entity with built-in KYC/AML, operating in 160+ countries.",
+    title: "Buy & sell coming soon",
+    description: "Buy and sell crypto with local payment methods — UPI, cards, bank transfers, Apple Pay, Google Pay — coming to 40+ countries.",
   },
   {
     icon: (
@@ -42,7 +42,7 @@ const features = [
       </svg>
     ),
     title: "Transparent fees",
-    description: "No hidden charges. The rate you see is the rate you pay. No surprises at checkout.",
+    description: "Flat 0.75% swap fee. No hidden charges, no surprise markups. What you see is what you pay.",
   },
   {
     icon: (
@@ -62,12 +62,11 @@ export default function Features() {
         <div className="max-w-2xl mb-16">
           <p className="text-sm font-medium text-indigo-400 mb-3">Features</p>
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
-            Built for crypto users worldwide
+            Built for cross-chain swappers worldwide
           </h2>
           <p className="text-muted leading-relaxed">
-            The fastest, simplest, and most secure way to buy and sell
-            cryptocurrency globally. Everything you need, nothing you
-            don&apos;t.
+            The simplest way to swap tokens across any chain. Connect your
+            wallet, pick your tokens, and let LI.FI find the best route.
           </p>
         </div>
 
