@@ -46,8 +46,8 @@ const widgetConfig: WidgetConfig = {
 export default function LiFiSwapper({ onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-[720px] mx-4 max-h-[95vh] min-h-[700px] overflow-auto rounded-2xl border border-white/10 shadow-2xl">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="relative z-10 w-full max-w-[900px] mx-4 max-h-[98vh] min-h-[800px] overflow-auto rounded-2xl border border-white/10 shadow-2xl">
         <div className="flex items-center justify-between p-4 border-b border-white/5">
           <h3 className="text-sm font-semibold text-foreground">Swap across chains</h3>
           <button
